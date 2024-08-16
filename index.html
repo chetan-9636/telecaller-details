@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<style>
+  body {
+    background: lavender;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+  }
+  form {
+    max-width: 400px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+  button {
+    background-color: blueviolet;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Login Page -->
+<div id="loginPage" class="page">
+  <img src="https://media.licdn.com/dms/image/C4D0BAQHHC_SSVMpiyw/company-logo_200_200/0/1650256278666?e=2147483647&v=beta&t=Yxy9I49PIo93J8LrGIWGiYLjYK4dVo1ojrS6FPEKPjc" alt="Aviator training academy" height="300" width="300">
+  <h1>Login</h1>
+  <form id="loginForm">
+    <label for="userId">User ID:</label><br>
+    <input type="text" id="userId" name="userId"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br>
+    <button type="button" onclick="login()">Login</button>
+  </form>
+</div>
+
+<!-- Dashboard Page -->
+<div id="dashboardPage" class="page hidden">
+  <h1>Welcome, Staff!</h1>
+  <h2>Choose an option:</h2>
+  <button onclick="openDataPage()">Data</button>
+  <button onclick="openFormPage()">Form</button>
+  <button onclick="openReportPage()">Report</button>
+  <button onclick="openWeeklyReport()">Weekly Report</button>
+  <button onclick="openMonthlyReport()">Monthly Report</button>
+  <div id="reportContent"></div>
+</div>
+
+<!-- Report Page -->
+<div id="reportPage" class="page hidden">
+  <h1>Report</h1>
+  <form id="reportForm">
+    <label for="date">Date:</label><br>
+    <input type="date" id="date" name="date"><br>
+    <label for="totalCalls">Total Calls:</label><br>
+    <input type="number" id="totalCalls" name="totalCalls"><br>
+    <label for="prospects">Prospects:</label><br>
+    <input type="number" id="prospects" name="prospects"><br>
+    <label for="futureProspects">Future Prospects:</label><br>
+    <input type="number" id="futureProspects" name="futureProspects"><br>
+    <label for="notAnswering">Not Answering:</label><br>
+    <input type="number" id="notAnswering" name="notAnswering"><br>
+    <label for="notReachable">Not Reachable:</label><br>
+    <input type="number" id="notReachable" name="notReachable"><br>
+    <label for="switchedOff">Switched Off:</label><br>
+    <input type="number" id="switchedOff" name="switchedOff"><br>
+    <label for="outOfService">Out of Service:</label><br>
+    <input type="number" id="outOfService" name="outOfService"><br>
+    <label for="notInterested">Not Interested:</label><br>
+    <input type="number" id="notInterested" name="notInterested"><br>
+    <label for="wrongNumber">Wrong Number:</label><br>
+    <input type="number" id="wrongNumber" name="wrongNumber"><br>
+    <label for="languageProblem">Language Problem:</label><br>
+    <input type="number" id="languageProblem" name="languageProblem"><br>
+    <label for="callBack">Call Back:</label><br>
+    <input type="number" id="callBack" name="callBack"><br>
+    <label for="notConnecting">Not Connecting:</label><br>
+    <input type="number" id="notConnecting" name="notConnecting"><br>
+    <label for="others">Others:</label><br>
+    <input type="number" id="others" name="others"><br>
+    <label for="followUps">Follow Ups:</label><br>
+    <input type="number" id="followUps" name="followUps"><br>
+    <button type="button" onclick="submitReport()">Submit</button>
+    <button type="button" onclick="goBack()">Back</button>
+  </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Check if the user is already logged in
+  var isLoggedIn = sessionStorage.getItem('isLoggedIn');
+  if (isLoggedIn === 'true') {
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('dashboardPage').classList.remove('hidden');
+  }
+});
+
+function login() {
+  var userId = document.getElementById('userId').value;
+  var password = document.getElementById('password').value;
+
+  if (userId === 'staff' && password === 'aviator123') {
+    sessionStorage.setItem('isLoggedIn', 'true');
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('dashboardPage').classList.remove('hidden');
+  } else {
+    alert('Invalid credentials. Please try again.');
+  }
+}
+
+function openDataPage() {
+  document.getElementById('dashboardPage').classList.add('hidden');
+  window.location.href = 'data.html'; // Redirect to data page
+}
+
+function openFormPage() {
+  document.getElementById('dashboardPage').classList.add('hidden');
+  alert('Form Page');
+}
+
+function openReportPage() {
+  document.getElementById('dashboardPage').classList.add('hidden');
+  document.getElementById('reportPage').classList.remove('hidden');
+}
+
+function submitReport() {
+  var date = document.getElementById('date').value;
+  var totalCalls = document.getElementById('totalCalls').value;
+  var prospects = document.getElementById('prospects').value;
+  var futureProspects = document.getElementById('futureProspects').value;
+  var notAnswering = document.getElementById('notAnswering').value;
+  var notReachable = document.getElementById('notReachable').value;
+  var switchedOff = document.getElementById('switchedOff').value;
+  var outOfService = document.getElementById('outOfService').value;
+  var notInterested = document.getElementById('notInterested').value;
+  var wrongNumber = document.getElementById('wrongNumber').value;
+  var languageProblem = document.getElementById('languageProblem').value;
+  var callBack = document.getElementById('callBack').value;
+  var notConnecting = document.getElementById('notConnecting').value;
+  var others = document.getElementById('others').value;
+  var followUps = document.getElementById('followUps').value;
+
+  var report = {
+    date: date,
+    totalCalls: totalCalls,
+    prospects: prospects,
+    futureProspects: futureProspects,
+    notAnswering: notAnswering,
+    notReachable: notReachable,
+    switchedOff: switchedOff,
+    outOfService: outOfService,
+    notInterested: notInterested,
+    wrongNumber: wrongNumber,
+    languageProblem: languageProblem,
+    callBack: callBack,
+    notConnecting: notConnecting,
+    others: others,
+    followUps: followUps
+  };
+
+  var reports = JSON.parse(localStorage.getItem('reports')) || [];
+  reports.push(report);
+  localStorage.setItem('reports', JSON.stringify(reports));
+
+  alert('Report submitted successfully!');
+}
+
+function goBack() {
+  document.getElementById('dashboardPage').classList.remove('hidden');
+  document.getElementById('reportPage').classList.add('hidden');
+}
+
+function openWeeklyReport() {
+  var weeklyReports = aggregateWeeklyReport();
+  displayReport(weeklyReports, 'Weekly');
+}
+
+function openMonthlyReport() {
+  var monthlyReports = aggregateMonthlyReport();
+  displayReport(monthlyReports, 'Monthly');
+}
+
+function aggregateWeeklyReport() {
+  var reports = JSON.parse(localStorage.getItem('reports')) || [];
+  var weeklyReports = {};
+  
+  reports.forEach(report => {
+    var reportDate = new Date(report.date);
+    var weekNumber = getWeekNumber(reportDate);
+    
+    if (!weeklyReports[weekNumber]) {
+      weeklyReports[weekNumber] = initializeWeeklyReport(report.date);
+    }
+    
+    aggregateData(weeklyReports[weekNumber], report);
+  });
+
+  return Object.values(weeklyReports);
+}
+
+function aggregateMonthlyReport() {
+  var reports = JSON.parse(localStorage.getItem('reports')) || [];
+  var monthlyReports = {};
+
+  reports.forEach(report => {
+    var reportDate = new Date(report.date);
+    var month = reportDate.getMonth() + 1; // months are 0-based
+    var year = reportDate.getFullYear();
+    var monthYear = year + '-' + month;
+
+    if (!monthlyReports[monthYear]) {
+      monthlyReports[monthYear] = initializeMonthlyReport(report.date);
+    }
+
+    aggregateData(monthlyReports[monthYear], report);
+  });
+
+  return Object.values(monthlyReports);
+}
+
+function initializeWeeklyReport(date) {
+  var reportDate = new Date(date);
+  var startOfWeek = getStartOfWeek(reportDate);
+  var endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 6);
+
+  return {
+    startOfWeek: startOfWeek.toISOString().split('T')[0],
+    endOfWeek: endOfWeek.toISOString().split('T')[0],
+    totalCalls: 0,
+    prospects: 0,
+    futureProspects: 0,
+    notAnswering: 0,
+    notReachable: 0,
+    switchedOff: 0,
+    outOfService: 0,
+    notInterested: 0,
+    wrongNumber: 0,
+    languageProblem: 0,
+    callBack: 0,
+    notConnecting: 0,
+    others: 0,
+    followUps: 0
+  };
+}
+
+function initializeMonthlyReport(date) {
+  var reportDate = new Date(date);
+  var year = reportDate.getFullYear();
+  var month = reportDate.getMonth() + 1;
+
+  return {
+    month: year + '-' + (month < 10 ? '0' + month : month),
+    totalCalls: 0,
+    prospects: 0,
+    futureProspects: 0,
+    notAnswering: 0,
+    notReachable: 0,
+    switchedOff: 0,
+    outOfService: 0,
+    notInterested: 0,
+    wrongNumber: 0,
+    languageProblem: 0,
+    callBack: 0,
+    notConnecting: 0,
+    others: 0,
+    followUps: 0
+  };
+}
+
+function aggregateData(aggregateReport, report) {
+  aggregateReport.totalCalls += parseInt(report.totalCalls);
+  aggregateReport.prospects += parseInt(report.prospects);
+  aggregateReport.futureProspects += parseInt(report.futureProspects);
+  aggregateReport.notAnswering += parseInt(report.notAnswering);
+  aggregateReport.notReachable += parseInt(report.notReachable);
+  aggregateReport.switchedOff += parseInt(report.switchedOff);
+  aggregateReport.outOfService += parseInt(report.outOfService);
+  aggregateReport.notInterested += parseInt(report.notInterested);
+  aggregateReport.wrongNumber += parseInt(report.wrongNumber);
+  aggregateReport.languageProblem += parseInt(report.languageProblem);
+  aggregateReport.callBack += parseInt(report.callBack);
+  aggregateReport.notConnecting += parseInt(report.notConnecting);
+  aggregateReport.others += parseInt(report.others);
+  aggregateReport.followUps += parseInt(report.followUps);
+}
+
+function getWeekNumber(date) {
+  var firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+  var pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+  return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+}
+
+function getStartOfWeek(date) {
+  var day = date.getDay();
+  var diff = date.getDate() - day + (day === 0 ? -6 : 1);
+  return new Date(date.setDate(diff));
+}
+
+function displayReport(reports, type) {
+  var reportContent = document.getElementById('reportContent');
+  reportContent.innerHTML = `<h2>${type} Reports</h2>`;
+  reports.forEach(report => {
+    reportContent.innerHTML += `
+      <div>
+        <h3>${type} ${report.startOfWeek || report.month}</h3>
+        <p>Total Calls: ${report.totalCalls}</p>
+        <p>Prospects: ${report.prospects}</p>
+        <p>Future Prospects: ${report.futureProspects}</p>
+        <p>Not Answering: ${report.notAnswering}</p>
+        <p>Not Reachable: ${report.notReachable}</p>
+        <p>Switched Off: ${report.switchedOff}</p>
+        <p>Out of Service: ${report.outOfService}</p>
+        <p>Not Interested: ${report.notInterested}</p>
+        <p>Wrong Number: ${report.wrongNumber}</p>
+        <p>Language Problem: ${report.languageProblem}</p>
+        <p>Call Back: ${report.callBack}</p>
+        <p>Not Connecting: ${report.notConnecting}</p>
+        <p>Others: ${report.others}</p>
+        <p>Follow Ups: ${report.followUps}</p>
+      </div>`;
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+</style>
+</head>
+<body>
+
+<h1>Stored Reports</h1>
+
+<table id="reportTable">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Total Calls</th>
+      <th>Prospects</th>
+      <th>Future Prospects</th>
+      <th>Not Answering</th>
+      <th>Not Reachable</th>
+      <th>Switched Off</th>
+      <th>Out of Service</th>
+      <th>Not Interested</th>
+      <th>Wrong Number</th>
+      <th>Language Problem</th>
+      <th>Call Back</th>
+      <th>Not Connecting</th>
+      <th>Others</th>
+      <th>Follow Ups</th>
+      <th>Action</th> <!-- New column for delete button -->
+    </tr>
+  </thead>
+  <tbody id="reportTableBody">
+    <!-- Table rows will be dynamically added here -->
+  </tbody>
+</table>
+
+<button onclick="goBack()">Back</button>
+
+<script>
+var reports = JSON.parse(localStorage.getItem('reports')) || [];
+var tableBody = document.getElementById('reportTableBody');
+
+reports.forEach(function(report, index) { // Include index for each report
+  var row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${report.date}</td>
+    <td>${report.totalCalls}</td>
+    <td>${report.prospects}</td>
+    <td>${report.futureProspects}</td>
+    <td>${report.notAnswering}</td>
+    <td>${report.notReachable}</td>
+    <td>${report.switchedOff}</td>
+    <td>${report.outOfService}</td>
+    <td>${report.notInterested}</td>
+    <td>${report.wrongNumber}</td>
+    <td>${report.languageProblem}</td>
+    <td>${report.callBack}</td>
+    <td>${report.notConnecting}</td>
+    <td>${report.others}</td>
+    <td>${report.followUps}</td>
+    <td><button onclick="deleteRow(${index})">Delete</button></td> <!-- Delete button -->
+  `;
+  tableBody.appendChild(row);
+});
+
+function goBack() {
+  history.back(); // Go back to the previous page in history (Dashboard Page)
+}
+
+function deleteRow(index) {
+  reports.splice(index, 1); // Remove the report from the array
+  localStorage.setItem('reports', JSON.stringify(reports)); // Update localStorage
+  location.reload(); // Reload the page to reflect the changes
+}
+</script>
+
+</body>
+</html>
